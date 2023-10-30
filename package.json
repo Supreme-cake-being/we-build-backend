@@ -2,6 +2,7 @@
   "name": "we-build-backend",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./server.js",
     "start:dev": "cross-env NODE_ENV=development nodemon ./server.js",
@@ -18,7 +19,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.3",
     "morgan": "1.10.0",
-    "nanoid": "^5.0.2"
+    "nanoid": "^5.0.2",
+    "nodemailer": "^6.9.7"
   },
   "devDependencies": {
     "eslint": "7.19.0",
