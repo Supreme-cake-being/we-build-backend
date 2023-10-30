@@ -1,2 +1,1 @@
-# WeBuild-backend
-Course work backend repository
+# we-build-backend
