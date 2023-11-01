@@ -1,4 +1,4 @@
-import { HttpError } from '../helpers/index.js';
+import { HttpError, isRightRole } from '../helpers/index.js';
 import { ctrlWrapper } from '../decorators/index.js';
 import Blog from '../models/Blog.js';
 
@@ -20,13 +20,18 @@ const getById = async (req, res, next) => {
 
 const add = async (req, res, next) => {
   const owner = req.user;
+
+  isRightRole(owner.role, 'smm');
+
   const result = await Blog.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
 const deleteById = async (req, res, next) => {
-  const { _id: owner } = req.user;
+  const { _id: owner, role } = req.user;
   const { blogId } = req.params;
+
+  isRightRole(role, 'smm');
 
   const result = await Blog.findOneAndDelete({ _id: blogId, owner });
 
@@ -38,8 +43,10 @@ const deleteById = async (req, res, next) => {
 };
 
 const updateById = async (req, res, next) => {
-  const { _id: owner } = req.user;
+  const { _id: owner, role } = req.user;
   const { blogId } = req.params;
+
+  isRightRole(role, 'smm');
 
   const result = await Blog.findOneAndUpdate({ _id: blogId, owner }, req.body);
   if (!result) {

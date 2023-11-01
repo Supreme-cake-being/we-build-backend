@@ -10,21 +10,27 @@ const messagesErrors = {
   'any.required': 'Missing required {#label} field',
 };
 
-const blogSchema = new Schema({
-  title: {
-    type: String,
-    required: [true, 'Blog title is required'],
+const blogSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: [true, 'Blog title is required'],
+    },
+    text: {
+      type: String,
+      required: [true, 'Blog text is required'],
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
-  text: {
-    type: String,
-    required: [true, 'Blog text is required'],
-  },
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: 'user',
-    required: true,
-  },
-});
+  {
+    versionKey: false,
+    timestamps: true,
+  }
+);
 
 blogSchema.post('save', handleSaveError);
 
@@ -35,7 +41,7 @@ blogSchema.post('findOneAndUpdate', handleSaveError);
 export const blogsAddSchema = Joi.object({
   title: Joi.string().min(4).required(),
   text: Joi.string().min(8).max(300).required(),
-}).messages(messagesErrors);
+}).messages({ ...messagesErrors });
 
 const Blog = model('blog', blogSchema);
 

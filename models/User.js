@@ -3,6 +3,10 @@ import Joi from 'joi';
 import { handleSaveError, runValidatorsAtUpdate } from './hooks.js';
 
 const emailRegexp = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$');
+const messagesErrors = {
+  'string.min': 'Field {#label} should be at least {#limit} characters long',
+  'any.required': 'Missing required {#label} field',
+};
 
 const userSchema = new Schema({
   password: {

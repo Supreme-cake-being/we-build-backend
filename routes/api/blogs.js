@@ -6,9 +6,9 @@ import {
   isValidId,
 } from '../../middlewares/index.js';
 import { validateBody } from '../../decorators/index.js';
-import { blogAddSchema } from '../../models/Blog.js';
+import { blogsAddSchema } from '../../models/Blog.js';
 
-const blogAddValidate = validateBody(blogAddSchema);
+const blogAddValidate = validateBody(blogsAddSchema);
 
 const router = express.Router();
 
@@ -27,3 +27,5 @@ router.put(
   isEmptyBody,
   blogsController.updateById
 );
+
+export default router;
