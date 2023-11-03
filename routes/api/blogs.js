@@ -6,9 +6,9 @@ import {
   isValidId,
 } from '../../middlewares/index.js';
 import { validateBody } from '../../decorators/index.js';
-import { blogsAddSchema } from '../../models/Blog.js';
+import { blogAddSchema } from '../../models/Blog.js';
 
-const blogAddValidate = validateBody(blogsAddSchema);
+const blogAddValidate = validateBody(blogAddSchema);
 
 const router = express.Router();
 
@@ -16,7 +16,13 @@ router.get('/', blogsController.getAll);
 
 router.get('/:blogId', isValidId, blogsController.getById);
 
-router.post('/', authenticate, isEmptyBody, blogsController.add);
+router.post(
+  '/',
+  authenticate,
+  isEmptyBody,
+  blogAddValidate,
+  blogsController.add
+);
 
 router.delete('/:blogId', authenticate, isValidId, blogsController.deleteById);
 
@@ -25,6 +31,7 @@ router.put(
   authenticate,
   isValidId,
   isEmptyBody,
+  blogAddValidate,
   blogsController.updateById
 );
 

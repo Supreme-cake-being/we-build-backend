@@ -3,11 +3,11 @@ import Joi from 'joi';
 import { handleSaveError, runValidatorsAtUpdate } from './hooks.js';
 
 const messagesErrors = {
-  'string.base': 'Field {#label} must be a string.',
-  'string.empty': 'Field {#label} cannot be empty.',
+  'string.base': '{#label} must be a string.',
+  'string.empty': '{#label} cannot be empty.',
   'string.min': 'Field {#label} should be at least {#limit} characters long',
   'string.max': 'Field {#label} should not be longer than {#limit}',
-  'any.required': 'Missing required {#label} field',
+  'any.required': '{#label} is required',
 };
 
 const blogSchema = new Schema(
@@ -38,10 +38,10 @@ blogSchema.pre('findOneAndUpdate', runValidatorsAtUpdate);
 
 blogSchema.post('findOneAndUpdate', handleSaveError);
 
-export const blogsAddSchema = Joi.object({
+export const blogAddSchema = Joi.object({
   title: Joi.string().min(4).required(),
   text: Joi.string().min(8).max(300).required(),
-}).messages({ ...messagesErrors });
+}).messages(messagesErrors);
 
 const Blog = model('blog', blogSchema);
 
