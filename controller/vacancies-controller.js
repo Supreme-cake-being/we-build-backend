@@ -23,7 +23,7 @@ const add = async (req, res, next) => {
 
   isRightRole(owner.role, 'hr');
 
-  const result = await Blog.create({ ...req.body, owner });
+  const result = await Vacancy.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
@@ -33,7 +33,7 @@ const deleteById = async (req, res, next) => {
 
   isRightRole(role, 'hr');
 
-  const result = await Blog.findOneAndDelete({ _id: vacancyId, owner });
+  const result = await Vacancy.findOneAndDelete({ _id: vacancyId, owner });
 
   if (!result) {
     throw HttpError(404, 'Not found');
@@ -48,10 +48,21 @@ const updateById = async (req, res, next) => {
 
   isRightRole(role, 'hr');
 
-  const result = await Blog.findOneAndUpdate(
+  const result = await Vacancy.findOneAndUpdate(
     { _id: vacancyId, owner },
     req.body
   );
+  if (!result) {
+    throw HttpError(404, 'Not found');
+  }
+
+  res.json(result);
+};
+
+const updateContactInfo = async (req, res, next) => {
+  const { vacancyId } = req.params;
+
+  const result = await Vacancy.findOneAndUpdate({ _id: vacancyId }, req.body);
   if (!result) {
     throw HttpError(404, 'Not found');
   }
@@ -65,4 +76,5 @@ export default {
   add: ctrlWrapper(add),
   deleteById: ctrlWrapper(deleteById),
   updateById: ctrlWrapper(updateById),
+  updateContactInfo: ctrlWrapper(updateContactInfo),
 };
