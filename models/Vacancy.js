@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import Joi, { string } from 'joi';
+import Joi from 'joi';
 import { handleSaveError, runValidatorsAtUpdate } from './hooks.js';
 
 const errorMessages = {
@@ -63,8 +63,8 @@ export const vacancyAddSchema = Joi.object({
   position: Joi.string().min(2).max(50).required(),
   salary: Joi.number().min(0).max(10000).required(),
   description: Joi.string().min(8).max(1000).required(),
-  contactEmail: Joi.string(),
-  contactNumber: Joi.string(),
+  // contactEmail: Joi.string(),
+  // contactNumber: Joi.string(),
 }).messages(errorMessages);
 
 export const vacancyUpdateContactInformation = Joi.object({
@@ -77,3 +77,5 @@ export const vacancyUpdateContactInformation = Joi.object({
 }).messages();
 
 const Vacancy = model('vacancy', vacancySchema);
+
+export default Vacancy;
