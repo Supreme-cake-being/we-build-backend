@@ -18,7 +18,7 @@ const router = express.Router();
 
 router.get('/', vacanciesController.getAll);
 
-router.get('/:vacancyId', isValidId, vacanciesController.getById);
+router.get('/:vacancyId', isValidId.vacancy, vacanciesController.getById);
 
 router.post(
   '/',
@@ -31,17 +31,25 @@ router.post(
 router.delete(
   '/:vacancyId',
   authenticate,
-  isValidId,
+  isValidId.vacancy,
   vacanciesController.deleteById
 );
 
 router.put(
   '/:vacancyId',
   authenticate,
-  isValidId,
+  isValidId.vacancy,
   isEmptyBody,
   vacancyAddVaidate,
   vacanciesController.updateById
+);
+
+router.patch(
+  '/:vacancyId',
+  isValidId.vacancy,
+  isEmptyBody,
+  vacancyUpdateValidate,
+  vacanciesController.updateContactInfo
 );
 
 export default router;

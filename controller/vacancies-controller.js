@@ -23,7 +23,7 @@ const add = async (req, res, next) => {
 
   isRightRole(owner.role, 'hr');
 
-  const result = await Vacancy.create({ ...req.body, owner });
+  const result = await Vacancy.create({ ...req.body, hr: owner });
   res.status(201).json(result);
 };
 
@@ -33,7 +33,7 @@ const deleteById = async (req, res, next) => {
 
   isRightRole(role, 'hr');
 
-  const result = await Vacancy.findOneAndDelete({ _id: vacancyId, owner });
+  const result = await Vacancy.findOneAndDelete({ _id: vacancyId, hr: owner });
 
   if (!result) {
     throw HttpError(404, 'Not found');
@@ -48,8 +48,10 @@ const updateById = async (req, res, next) => {
 
   isRightRole(role, 'hr');
 
+  console.log(vacancyId);
+
   const result = await Vacancy.findOneAndUpdate(
-    { _id: vacancyId, owner },
+    { _id: vacancyId, hr: owner },
     req.body
   );
   if (!result) {
