@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get('/', blogsController.getAll);
 
-router.get('/:blogId', isValidId, blogsController.getById);
+router.get('/:blogId', isValidId.blog, blogsController.getById);
 
 router.post(
   '/',
@@ -24,12 +24,17 @@ router.post(
   blogsController.add
 );
 
-router.delete('/:blogId', authenticate, isValidId, blogsController.deleteById);
+router.delete(
+  '/:blogId',
+  authenticate,
+  isValidId.blog,
+  blogsController.deleteById
+);
 
 router.put(
   '/:blogId',
   authenticate,
-  isValidId,
+  isValidId.blog,
   isEmptyBody,
   blogAddValidate,
   blogsController.updateById
