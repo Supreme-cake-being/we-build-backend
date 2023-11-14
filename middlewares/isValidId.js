@@ -18,4 +18,12 @@ const vacancy = (req, res, next) => {
   next();
 };
 
-export default { blog, vacancy };
+const project = (req, res, next) => {
+  const { projectId } = req.params;
+  if (!isValidObjectId(projectId)) {
+    return next(HttpError(404, `Not found`));
+  }
+  next();
+};
+
+export default { blog, vacancy, project };

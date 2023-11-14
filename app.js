@@ -6,6 +6,7 @@ import 'dotenv/config';
 import authRouter from './routes/api/auth.js';
 import blogsRouter from './routes/api/blogs.js';
 import vacanciesRouter from './routes/api/vacancies.js';
+import projectsRouter from './routes/api/projects.js';
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/api/users', authRouter);
 app.use('/api/blogs', blogsRouter);
 app.use('/api/vacancies', vacanciesRouter);
+app.use('/api/projects', projectsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
