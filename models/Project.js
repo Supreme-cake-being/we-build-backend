@@ -15,6 +15,10 @@ const projectSchema = new Schema(
       type: String,
       required: [true, 'Project info is required'],
     },
+    image: {
+      type: String,
+      required: [true, 'Project image is required'],
+    },
     address: {
       type: String,
       required: [true, 'Project address is required'],
